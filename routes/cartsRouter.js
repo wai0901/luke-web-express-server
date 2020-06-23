@@ -18,7 +18,6 @@ cartsRouter.route('/')
     //populate the comments by finding the ID that match
     // .populate('comments.author')
     .then(carts => {
-        console.log(carts)
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(carts);

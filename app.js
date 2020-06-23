@@ -6,9 +6,10 @@ const passport = require('passport');
 const config = require('./config');
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/usersRouter');
+const usersRouter = require('./routes/users');
 const cartsRouter = require('./routes/cartsRouter');
 const mainDataRouter = require('./routes/mainDataRouter');
+const ordersRouter = require('./routes/ordersRouter');
 
 
 
@@ -28,14 +29,20 @@ connect.then(() => console.log('Connected correctly to server'),
 
 const app = express();
 
-// view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'jade');
+// Secure traffic only
+app.all('*', (req, res, next) => {
+  if (req.secure) {
+    return next();
+  } else {
+      console.log(`Redirecting to: https://${req.hostname}:${app.get('secPort')}${req.url}`);
+      res.redirect(301, `https://${req.hostname}:${app.get('secPort')}${req.url}`);
+  }
+});
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-// app.use(cookieParser());
+
 
 //for passport if only use for session base authentication
 //is middleware function provided by passport to check the incoming user request if there is existing session for this user.
@@ -44,6 +51,7 @@ app.use(passport.initialize());
 app.use('/', indexRouter);
 //It has to be before Authentication session, because need to let user login or signup before Auth check.
 app.use('/users', usersRouter);
+app.use('/orders', ordersRouter);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
