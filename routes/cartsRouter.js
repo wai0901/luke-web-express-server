@@ -25,6 +25,7 @@ cartsRouter.route('/')
     .catch(err => next(err));
 })
 .post(cors.corsWithOptions, (req, res, next) => {
+  console.log(req)
   Carts.create(req.body)
   .then(cart => {
       console.log('Added item to cart', cart);

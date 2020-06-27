@@ -1,3 +1,4 @@
+require('dotenv').config();
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('./models/user');
@@ -6,7 +7,8 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 const jwt = require('jsonwebtoken');
 const FacebookTokenStrategy = require('passport-facebook-token');
 
-const config = require('./config.js');
+
+const secretKey = process.env.SECRET_KEY;
 
 
 exports.local = passport.use(new LocalStrategy(User.authenticate()));
@@ -17,13 +19,13 @@ passport.deserializeUser(User.deserializeUser());
 
 exports.getToken = user => {
     //expiresIn option for how long the token will be expire, usualy few days in realworld
-    return jwt.sign(user, config.secretKey, {expiresIn: 259200});
+    return jwt.sign(user, secretKey, {expiresIn: 259200});
 };
 
 const opts = {};
 //this method to specify how the webtoken to be extract from incoming message
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-opts.secretOrKey = config.secretKey;
+opts.secretOrKey = secretKey;
 
 exports.jwtPassport = passport.use(
     new JwtStrategy(
@@ -63,8 +65,8 @@ exports.verifyAdmin = (req, res, next) => {
 exports.facebookPassport = passport.use(
     new FacebookTokenStrategy(
         {
-            clientID: config.facebook.clientId,
-            clientSecret: config.facebook.clientSecret
+            clientID: process.env.FACEBOOK_CLIENT_ID,
+            clientSecret: process.env.FACEBOOK_CLIENT_SECRET
         }, 
         (accessToken, refreshToken, profile, done) => {
             User.findOne({facebookId: profile.id}, (err, user) => {

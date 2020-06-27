@@ -1,3 +1,4 @@
+require('dotenv').config();
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -15,7 +16,9 @@ const ordersRouter = require('./routes/ordersRouter');
 
 const mongoose = require('mongoose');
 
-const url = config.mongoUrl;
+// const url = config.mongoUrl;
+const url = process.env.MONGO_URL;
+
 const connect = mongoose.connect(url, {
   useCreateIndex: true,
   useNewUrlParser: true,
