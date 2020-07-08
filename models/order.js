@@ -5,9 +5,8 @@ require('mongoose-currency').loadType(mongoose);
 const Currency = mongoose.Types.Currency;
 
 const orderSchema = new Schema({
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+    userId: {
+        type: String
     },
     orders: [{
         type: Object,

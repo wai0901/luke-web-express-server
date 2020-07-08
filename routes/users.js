@@ -1,5 +1,6 @@
 const express = require('express');
 const User = require('../models/user');
+const Carts = require('../models/carts');
 const passport = require('passport');
 const authenticate = require('../authenticate');
 const cors = require('./cors');
@@ -94,10 +95,39 @@ router.post('/login', cors.corsWithOptions, (req, res, next) => {
                 res.setHeader('Content-Type', 'application/json');
                 res.json({success: false, status: 'Login Unsuccessful!', err: 'Could not log in user!'});          
             }
-            const token = authenticate.getToken({_id: req.user._id});
-            res.statusCode = 200;
-            res.setHeader('Content-Type', 'application/json');
-            res.json({success: true, user: user, token: token, status: 'You are successfully logged in!'});
+
+            const userInfo = {
+                firstname: user.firstname,
+                lastname: user.lastname,
+                username: user.username,
+                _id: user._id,
+                address: {
+                    street: user.street,
+                    city: user.city,
+                    state: user.state,
+                    zip: user.zip
+                },
+                tel: user.tel,
+                email: user.email,
+                admin: user.admin
+            }
+
+            //check if the user has previous item saved in cart before login
+            Carts.find()
+            .then((carts) => {
+                //To find the cart item which is belonging to the login in user
+                return carts ?
+                    carts.filter(item => 
+                        JSON.stringify(item.userId) === JSON.stringify(user._id)
+                        ):
+                    []
+            })
+            .then(items => {
+                const token = authenticate.getToken({_id: req.user._id});
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'application/json');
+                res.json({success: true, user: userInfo, serverItems: items, token: token, status: 'You are successfully logged in!'});
+            }) 
         });
     })(req, res, next);
 });

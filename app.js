@@ -4,7 +4,7 @@ const express = require('express');
 const path = require('path');
 const logger = require('morgan');
 const passport = require('passport');
-const config = require('./config');
+// const config = require('./config');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -41,6 +41,10 @@ app.all('*', (req, res, next) => {
       res.redirect(301, `https://${req.hostname}:${app.get('secPort')}${req.url}`);
   }
 });
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 app.use(express.json());
