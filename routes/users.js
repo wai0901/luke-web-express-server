@@ -101,7 +101,21 @@ router.post('/login', cors.corsWithOptions, (req, res, next) => {
                 lastname: user.lastname,
                 username: user.username,
                 _id: user._id,
-                address: {
+                billingAddress: {
+                    firstname: user.firstname,
+                    lastname: user.lastname,
+                    tel: user.tel,
+                    email: user.email,
+                    street: user.street,
+                    city: user.city,
+                    state: user.state,
+                    zip: user.zip
+                },
+                deliveryAddress: {
+                    firstname: user.firstname,
+                    lastname: user.lastname,
+                    tel: user.tel,
+                    email: user.email,
                     street: user.street,
                     city: user.city,
                     state: user.state,

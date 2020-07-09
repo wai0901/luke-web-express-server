@@ -23,7 +23,7 @@ cartsRouter.route("/")
             []
     })
       .then((items) => {
-        console.log("cart: ", items)
+        // console.log("cart: ", items)
         res.statusCode = 200;
         res.setHeader("Content-Type", "application/json");
         res.json(items);

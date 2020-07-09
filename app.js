@@ -11,6 +11,7 @@ const usersRouter = require('./routes/users');
 const cartsRouter = require('./routes/cartsRouter');
 const mainDataRouter = require('./routes/mainDataRouter');
 const ordersRouter = require('./routes/ordersRouter');
+const contactsRouter = require('./routes/contactsRouter');
 
 
 
@@ -59,10 +60,11 @@ app.use('/', indexRouter);
 //It has to be before Authentication session, because need to let user login or signup before Auth check.
 app.use('/users', usersRouter);
 app.use('/orders', ordersRouter);
+app.use('/carts', cartsRouter);
+app.use('/contacts', contactsRouter);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/carts', cartsRouter);
 app.use('/main', mainDataRouter);
 
 

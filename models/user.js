@@ -51,7 +51,9 @@ const userSchema = new Schema({
     admin: {
         type: Boolean,
         default: false
-    }
+    },
+}, {
+    timestamps: true
 });
 
 //this plugin will do the schema instead of we do it ourself

@@ -12,6 +12,14 @@ const orderSchema = new Schema({
         type: Object,
         required: true,
     }],
+    billingAddress: {
+        type: Object,
+        required: true,
+    },
+    deliveryAddress: {
+        type: Object,
+        required: true,
+    },
     orderTotal: {
         type: Currency,
         required: true,
