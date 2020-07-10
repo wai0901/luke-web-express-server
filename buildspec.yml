@@ -1,0 +1,23 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo Executing Install Phase...
+    finally:
+    - echo Executing Install Finally...
+  pre_build:
+    commands:
+      - echo Executing pre_build phase...
+    finally:
+      - echo Executing pre_build finally...
+  build:
+    commands:
+      - echo Build started on `date`
+    finally:
+      - echo Build finished on `date`
+  post_build:
+    commands:
+      - echo Build started on `date`
+    commands:
+      - echo Build completed on `date`
