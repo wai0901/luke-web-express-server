@@ -61,7 +61,7 @@ exports.verifyAdmin = (req, res, next) => {
     }
 }
 
-//Facebook
+Facebook
 exports.facebookPassport = passport.use(
     new FacebookTokenStrategy(
         {
