@@ -36,11 +36,12 @@ server.on('listening', onListening);
 /**
  * Create HTTPS server.
  */ 
- 
+
 const options = {
   key: fs.readFileSync(__dirname+'/server.key'),
   cert: fs.readFileSync(__dirname+'/server.cert')
 };
+
 
 const secureServer = https.createServer(options, app);
 
