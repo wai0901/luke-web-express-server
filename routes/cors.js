@@ -4,7 +4,11 @@ const whitelist = ['http://localhost:4000',
                     'https://localhost:3000', 
                     'https://localhost:3001', 
                     'http://localhost:3001', 
-                    'https://localhost:3443'
+                    'https://localhost:3443',
+                    'https://lukeexpress.com',
+                    'https://www.lukeexpress.com',
+                    'lukeexpress.com',
+                    'www.lukeexpress.com',
                 ];
 const corsOptionsDelegate = (req, callback) => {
     let corsOptions;
