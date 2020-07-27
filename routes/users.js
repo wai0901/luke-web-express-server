@@ -7,11 +7,11 @@ const cors = require('./cors');
 
 const router = express.Router();
 
-// router.options('*', cors.corsWithOptions, (req, res) => { res.sendStatus(200); });
+router.options('*', cors.corsWithOptions, (req, res) => { res.sendStatus(200); });
 /* GET users listing. */ 
 //only Admin
 router.route('/')
-.get( authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
+.get(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
     User.find()
     .then(user => {
         res.statusCode = 200;
@@ -20,7 +20,7 @@ router.route('/')
     })
 });
 
-router.post('/signup', (req, res) => {
+router.post('/signup', cors.corsWithOptions, (req, res) => {
     User.register(
         new User({ username: req.body.username}),
         req.body.password,
@@ -79,7 +79,7 @@ router.post('/signup', (req, res) => {
     );
 });
 
-router.post('/login', (req, res, next) => {
+router.post('/login', cors.corsWithOptions, (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
         if (err) {
             return next(err);
@@ -146,7 +146,7 @@ router.post('/login', (req, res, next) => {
     })(req, res, next);
 });
 
-router.get('/logout', (req, res, next) => {
+router.get('/logout', cors.corsWithOptions, (req, res, next) => {
     if (req.session) {
         req.session.destroy();
         res.clearCookie('session-id');
