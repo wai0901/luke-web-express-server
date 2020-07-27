@@ -13,7 +13,7 @@ ordersRouter.use(bodyParser.json());
 // cors.cors middleware is for get request, post and other need cors.corsWithOptions
 ordersRouter.route('/')
 .options(cors.corsWithOptions, (req, res) => res.sendStatus(200))
-.get((req, res, next) => {
+.get(cors.cors, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
     Order.find()
     .populate('User')
     .then(order => {
