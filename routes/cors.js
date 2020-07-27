@@ -9,6 +9,8 @@ const whitelist = ['http://localhost:4000',
                     'https://www.lukeexpress.com',
                     'lukeexpress.com',
                     'www.lukeexpress.com',
+                    'https://lukeexpress-server.herokuapp.com',
+                    'lukeexpress-server.herokuapp.com',
                 ];
 const corsOptionsDelegate = (req, callback) => {
     let corsOptions;
