@@ -20,7 +20,7 @@ router.route('/')
     })
 });
 
-router.post('/signup', cors.corsWithOptions, (req, res) => {
+router.post('/signup', (req, res) => {
     User.register(
         new User({ username: req.body.username}),
         req.body.password,
