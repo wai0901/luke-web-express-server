@@ -12,8 +12,8 @@ ordersRouter.use(bodyParser.json());
 // //for CORS problem put his option on every first GET request
 // cors.cors middleware is for get request, post and other need cors.corsWithOptions
 ordersRouter.route('/')
-// .options(cors.corsWithOptions, (req, res) => res.sendStatus(200))
-.get(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
+.options(cors.corsWithOptions, (req, res) => res.sendStatus(200))
+.get(cors.cors, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
     Order.find()
     .populate('User')
     .then(order => {
@@ -24,7 +24,7 @@ ordersRouter.route('/')
     .catch(err => next(err));
 })
 
-.post(authenticate.verifyUser, (req, res, next) => {
+.post(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
     if (req.body) {
         Order.create(req.body)
         .then(order => {
@@ -43,11 +43,11 @@ ordersRouter.route('/')
     }
 })
 
-.put(authenticate.verifyUser, authenticate.verifyAdmin, (req, res) => {
+.put(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res) => {
     res.statusCode = 403;
     res.end('PUT operation not supported on /order');
 })
-.delete(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
+.delete(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
     Order.deleteMany()
     .then(response => {
         res.statusCode = 200;
